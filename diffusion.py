@@ -6,6 +6,7 @@ from scipy.stats import maxwell
 # Параметры
 N = 500  # Количество частиц
 steps = 200  # Количество шагов
+bins_v = 25
 
 delta = 1  # Размер шага
 x = np.zeros((N, steps))
@@ -41,7 +42,7 @@ def update(frame):
     # Обновление гистограммы расстояний
     distances = np.sqrt(x[:, frame]**2 + y[:, frame]**2)
     ax_hist.cla()
-    ax_hist.hist(distances, bins=20, range=(0, 50), alpha=0.6, color='#777777', label="Эмпирические данные")
+    ax_hist.hist(distances, bins=bins_v, range=(0, 50), alpha=0.6, color='#777777', label="Эмпирические данные")
     
     # Теоретическая кривая Максвелла-Больцмана
     r = np.linspace(0, 50, 100)
@@ -50,7 +51,7 @@ def update(frame):
     ax_hist.plot(r, theoretical_pdf * N * 2, 'r-', label="Теоретическое распределение")
     
     ax_hist.set_xlim(0, 50)
-    ax_hist.set_ylim(0, N // 5)
+    ax_hist.set_ylim(0, 500)
     ax_hist.set_title("Гистограмма расстояний")
     ax_hist.legend()
     ax_hist.set_ylim(0, 150)
